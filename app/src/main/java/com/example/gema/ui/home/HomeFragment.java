@@ -1,5 +1,6 @@
 package com.example.gema.ui.home;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,11 +84,18 @@ public class HomeFragment extends Fragment {
         homeModel.setRegistrasiWBP("005");
         hasil.add(homeModel);
 
+        Stream<HomeModel> k = hasil.stream().filter(x -> x.getAkses()=="3");
+
+
+        if (k.count() >= 1){
+            MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.alarm);
+            mediaPlayer.start();
+        }
+
         //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
         hasil.removeIf(x -> x.getAkses()=="1");
 
-        Stream<HomeModel> k = hasil.stream().filter(x -> x.getAkses()=="3");
-        Log.d("Jumlah merah", String.valueOf(k.count()));
+
         return hasil;
     }
 }
