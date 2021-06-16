@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Gema Mobile</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="dmac">DMAC</string>
+    <string name="nama">Nama</string>
+    <string name="registrasi_wbp">Registrasi WBP</string>
+    <string name="WBP">WBP</string>
+    <string name="lokasi">Lokasi</string>
+</resources>
