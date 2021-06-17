@@ -8,6 +8,7 @@ public class HomeModel {
     String Nama;
     String RegistrasiWBP;
     String Akses;
+    String Gambar;
 
     public String getDMAC() {
         return DMAC;
@@ -41,6 +42,15 @@ public class HomeModel {
         Akses = akses;
     }
 
+    public String getGambar() {
+        return Gambar;
+    }
+
+    public void setGambar(String gambar) {
+        Gambar = gambar;
+    }
+
+    //fungsi di bawah ini untuk mengurutkan berdasarkan akses
     public static Comparator<HomeModel> modelComparator = new Comparator<HomeModel>() {
         public int compare(HomeModel s1, HomeModel s2) {
             String dt1 = s1.getAkses().toUpperCase();
