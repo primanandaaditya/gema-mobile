@@ -62,6 +62,9 @@ public class HomeAdapter  extends BaseAdapter {
                 break;
             case "2":
                 ll.setBackgroundColor(context.getResources().getColor(R.color.kuning));
+                fontHitam(tv_dmac);
+                fontHitam(tv_registrasiwbp);
+                fontHitam(tv_nama);
                 break;
             case "3":
                 ll.setBackgroundColor(context.getResources().getColor(R.color.merah));
@@ -76,5 +79,9 @@ public class HomeAdapter  extends BaseAdapter {
 
 
         return convertView;
+    }
+
+    void fontHitam(TextView textView){
+        textView.setTextColor(context.getResources().getColor(R.color.black));
     }
 }

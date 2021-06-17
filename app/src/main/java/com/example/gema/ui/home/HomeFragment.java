@@ -1,7 +1,10 @@
 package com.example.gema.ui.home;
 
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,8 +95,18 @@ public class HomeFragment extends Fragment {
         //jika jumlahnya lebih besar/sama dengan 1
         //nyalakan alarm
         if (k.count() >= 1){
+
+            //mainkan sound alarm
             MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.alarm);
             mediaPlayer.start();
+
+            //getarkan HP
+            Vibrator vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(2000);
+            }
         }
 
         //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
