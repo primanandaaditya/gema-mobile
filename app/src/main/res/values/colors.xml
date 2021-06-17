@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primer">#28B463</color>
     <color name="sekunder">#1D8348</color>
-    <color name="kuning">#F1C40F</color>
-    <color name="merah">#F1948A</color>
+    <color name="kuning">#FFFF00</color>
+    <color name="merah">#FF0000</color>
     <color name="hijau">#58D68D</color>
 </resources>

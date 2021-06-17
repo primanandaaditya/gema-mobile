@@ -20,6 +20,7 @@ import com.example.gema.adapter.HomeAdapter;
 import com.example.gema.model.HomeModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
         hasil.add(homeModel);
 
         homeModel=new HomeModel();
-        homeModel.setAkses("1");
+        homeModel.setAkses("3");
         homeModel.setDMAC("3984515687");
         homeModel.setNama("Budi");
         homeModel.setRegistrasiWBP("002");
@@ -98,6 +99,8 @@ public class HomeFragment extends Fragment {
         //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
         hasil.removeIf(x -> x.getAkses()=="1");
 
+        //urutkan supaya yang aksesnya 3 berada di list paling atas
+        Collections.sort(hasil,HomeModel.modelComparator);
 
         return hasil;
     }

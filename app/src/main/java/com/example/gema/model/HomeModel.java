@@ -1,5 +1,7 @@
 package com.example.gema.model;
 
+import java.util.Comparator;
+
 public class HomeModel {
 
     String DMAC;
@@ -38,4 +40,14 @@ public class HomeModel {
     public void setAkses(String akses) {
         Akses = akses;
     }
+
+    public static Comparator<HomeModel> modelComparator = new Comparator<HomeModel>() {
+        public int compare(HomeModel s1, HomeModel s2) {
+            String dt1 = s1.getAkses().toUpperCase();
+            String dt2 = s2.getAkses().toUpperCase();
+
+            //desc order
+            return dt2.compareTo(dt1);
+        }
+    };
 }
