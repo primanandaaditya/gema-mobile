@@ -50,43 +50,46 @@ public class HomeFragment extends Fragment {
         HomeModel homeModel;
 
         homeModel=new HomeModel();
-        homeModel.setAkses("1");
+        homeModel.setAkses("2");
         homeModel.setDMAC("3987348989");
         homeModel.setNama("Ani");
         homeModel.setRegistrasiWBP("001");
         hasil.add(homeModel);
 
         homeModel=new HomeModel();
-        homeModel.setAkses("2");
+        homeModel.setAkses("1");
         homeModel.setDMAC("3984515687");
         homeModel.setNama("Budi");
         homeModel.setRegistrasiWBP("002");
         hasil.add(homeModel);
 
         homeModel=new HomeModel();
-        homeModel.setAkses("3");
+        homeModel.setAkses("1");
         homeModel.setDMAC("3694512354");
         homeModel.setNama("Candra");
         homeModel.setRegistrasiWBP("003");
         hasil.add(homeModel);
 
         homeModel=new HomeModel();
-        homeModel.setAkses("3");
+        homeModel.setAkses("1");
         homeModel.setDMAC("3754561587");
         homeModel.setNama("Dedi");
         homeModel.setRegistrasiWBP("004");
         hasil.add(homeModel);
 
         homeModel=new HomeModel();
-        homeModel.setAkses("3");
+        homeModel.setAkses("1");
         homeModel.setDMAC("3312549785");
         homeModel.setNama("Eni");
         homeModel.setRegistrasiWBP("005");
         hasil.add(homeModel);
 
+
+        //cari yang nilai aksesnya =3
         Stream<HomeModel> k = hasil.stream().filter(x -> x.getAkses()=="3");
 
-
+        //jika jumlahnya lebih besar/sama dengan 1
+        //nyalakan alarm
         if (k.count() >= 1){
             MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.alarm);
             mediaPlayer.start();
