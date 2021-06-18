@@ -3,6 +3,7 @@ package com.example.gema.ui.home;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
@@ -97,6 +98,19 @@ public class HomeFragment extends Fragment implements IHomeRespon {
         //isi listview
         HomeAdapter homeAdapter=new HomeAdapter(getActivity(), respon.getPayload());
         listView.setAdapter(homeAdapter);
+
+        //jika sukses, hit endpoint lagi sesudah 2,5 detik
+        //jadi proses ini dilakukan berulang-ulang hanya dari kode dibawah
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+                //tunggu 2,5 detik
+                //baru hit endpoint lagi
+                homeController.get();
+
+            }
+        }, 2500);
 
 
     }

@@ -6,7 +6,7 @@ public class HomeModel {
 
     String DMAC;
     String Nama;
-    String RegistrasiWBP;
+    String Registrasi_WBP;
     String Akses;
     String Gambar;
 
@@ -26,12 +26,12 @@ public class HomeModel {
         Nama = nama;
     }
 
-    public String getRegistrasiWBP() {
-        return RegistrasiWBP;
+    public String getRegistrasi_WBP() {
+        return Registrasi_WBP;
     }
 
-    public void setRegistrasiWBP(String registrasiWBP) {
-        RegistrasiWBP = registrasiWBP;
+    public void setRegistrasi_WBP(String registrasi_WBP) {
+        Registrasi_WBP = registrasi_WBP;
     }
 
     public String getAkses() {

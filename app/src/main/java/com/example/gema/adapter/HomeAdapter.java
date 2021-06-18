@@ -75,7 +75,7 @@ public class HomeAdapter  extends BaseAdapter {
 
         tv_dmac.setText( "DMAC: " + homeModel.getDMAC());
         tv_nama.setText("Nama: " + homeModel.getNama());
-        tv_registrasiwbp.setText("Registrasi WBP: " + homeModel.getRegistrasiWBP());
+        tv_registrasiwbp.setText("Registrasi WBP: " + homeModel.getRegistrasi_WBP());
 
 
         return convertView;
