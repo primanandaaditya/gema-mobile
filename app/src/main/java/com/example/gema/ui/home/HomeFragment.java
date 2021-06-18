@@ -40,10 +40,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements IHomeRespon {
 
     ListView listView;
     MediaPlayer mediaPlayer;
+    HomeController homeController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,157 +57,55 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //init bunyi alarm
         mediaPlayer = MediaPlayer.create(getActivity(), R.raw.alarm);
 
+        //init listview
         listView=(ListView)getActivity().findViewById(R.id.lv);
 
-        AndroidNetworking.get("http://10.0.3.2:8083/fiktif.json")
-
-                .setTag("test")
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("respon json", response.toString());
-                        Gson gson = new Gson();
-                        BaseRespon<List<HomeModel>> listBaseRespon= gson.fromJson(response.toString(), new TypeToken<BaseRespon<List<HomeModel>>>(){}.getType());
-
-
-                        //cari yang nilai aksesnya =3
-                        Stream<HomeModel> k = listBaseRespon.getPayload().stream().filter(x -> x.getAkses().equals("3"));
-
-
-                        //jika jumlahnya lebih besar/sama dengan 1
-                        //nyalakan alarm
-                        if (k.count() >= 1){
-
-                            //mainkan sound alarm
-                            mediaPlayer.start();
-
-                            //getarkan HP
-                            Vibrator vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                vibrator.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
-                            } else {
-                                vibrator.vibrate(2000);
-                            }
-                        }
-
-                        //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
-                        listBaseRespon.getPayload().removeIf(x -> x.getAkses().equals("1"));
-
-                        //urutkan supaya yang aksesnya 3 berada di list paling atas
-                        Collections.sort(listBaseRespon.getPayload(),HomeModel.modelComparator);
-
-
-                        //tampilkan data di listview
-                        HomeAdapter homeAdapter = new HomeAdapter(getActivity(), listBaseRespon.getPayload());
-                        listView.setAdapter(homeAdapter);
-
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        //mulai akses endpoint
+        homeController=new HomeController(getActivity(), this);
+        homeController.get();
 
 
     }
+
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        mediaPlayer.stop();
+
+        //stop alarm kalau screen tdk fokus
+       homeController.stopAlarm();
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        mediaPlayer.stop();
-    }
+        //stop alarm kalau screen tdk fokus
+        homeController.stopAlarm();
 
-    List<HomeModel> filterList(List<HomeModel> list){
-        List<HomeModel> result = new ArrayList<HomeModel>() ;
-        for(HomeModel h: result){
-            if (h.getAkses().equals("1")){
-
-            }else{
-                result.add(h);
-            }
-        }
-        return result;
-    }
-
-    List<HomeModel> getData(){
-        List<HomeModel> hasil = new ArrayList<HomeModel>();
-        HomeModel homeModel;
-
-        homeModel=new HomeModel();
-        homeModel.setAkses("2");
-        homeModel.setDMAC("3987348989");
-        homeModel.setNama("Ani");
-        homeModel.setRegistrasiWBP("001");
-        hasil.add(homeModel);
-
-        homeModel=new HomeModel();
-        homeModel.setAkses("3");
-        homeModel.setDMAC("3984515687");
-        homeModel.setNama("Budi");
-        homeModel.setRegistrasiWBP("002");
-        hasil.add(homeModel);
-
-        homeModel=new HomeModel();
-        homeModel.setAkses("1");
-        homeModel.setDMAC("3694512354");
-        homeModel.setNama("Candra");
-        homeModel.setRegistrasiWBP("003");
-        hasil.add(homeModel);
-
-        homeModel=new HomeModel();
-        homeModel.setAkses("1");
-        homeModel.setDMAC("3754561587");
-        homeModel.setNama("Dedi");
-        homeModel.setRegistrasiWBP("004");
-        hasil.add(homeModel);
-
-        homeModel=new HomeModel();
-        homeModel.setAkses("1");
-        homeModel.setDMAC("3312549785");
-        homeModel.setNama("Eni");
-        homeModel.setRegistrasiWBP("005");
-        hasil.add(homeModel);
-
-
-        //cari yang nilai aksesnya =3
-        Stream<HomeModel> k = hasil.stream().filter(x -> x.getAkses()=="3");
-
-        //jika jumlahnya lebih besar/sama dengan 1
-        //nyalakan alarm
-        if (k.count() >= 1){
-
-            //mainkan sound alarm
-            mediaPlayer.start();
-
-            //getarkan HP
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                vibrator.vibrate(2000);
-            }
-        }
-
-        //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
-        hasil.removeIf(x -> x.getAkses()=="1");
-
-        //urutkan supaya yang aksesnya 3 berada di list paling atas
-        Collections.sort(hasil,HomeModel.modelComparator);
-
-        return hasil;
     }
 
 
+
+    @Override
+    public void onSukses(BaseRespon<List<HomeModel>> respon) {
+
+        //isi listview
+        HomeAdapter homeAdapter=new HomeAdapter(getActivity(), respon.getPayload());
+        listView.setAdapter(homeAdapter);
+
+
+    }
+
+    @Override
+    public void onGagal(ANError error) {
+
+        //jika error tampilkan toast dan matikan alarm
+        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        homeController.stopAlarm();
+    }
 }
