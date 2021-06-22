@@ -24,6 +24,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.gema.R;
 import com.example.gema.adapter.HomeAdapter;
 import com.example.gema.model.BaseRespon;
@@ -67,6 +68,8 @@ public class HomeFragment extends Fragment implements IHomeRespon {
         //mulai akses endpoint
         homeController=new HomeController(getActivity(), this);
         homeController.get();
+
+
 
 
     }
@@ -119,6 +122,7 @@ public class HomeFragment extends Fragment implements IHomeRespon {
     public void onGagal(ANError error) {
 
         //jika error tampilkan toast dan matikan alarm
+        Log.d("Error", error.getMessage());
         Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
         homeController.stopAlarm();
     }

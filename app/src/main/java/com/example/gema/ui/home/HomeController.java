@@ -14,6 +14,8 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.gema.R;
 import com.example.gema.adapter.HomeAdapter;
+import com.example.gema.helper.Endpoint;
+import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.HomeModel;
 import com.google.gson.Gson;
@@ -30,6 +32,7 @@ public class HomeController implements IHomeRequest {
     Context context;
     IHomeRespon iHomeRespon;
     MediaPlayer mediaPlayer;
+    Vibrator vibrator;
 
     public HomeController(Context context, IHomeRespon iHomeRespon) {
         this.context = context;
@@ -42,9 +45,8 @@ public class HomeController implements IHomeRequest {
     @Override
     public void get() {
 
-        AndroidNetworking.get("http://10.0.3.2:8083/fiktif.json")
 
-                .setTag("test")
+        AndroidNetworking.get(Endpoint.BASE_URL + Endpoint.DATA_WBP)
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -60,7 +62,7 @@ public class HomeController implements IHomeRequest {
 
 
                         //cari yang nilai aksesnya =3
-                        Stream<HomeModel> k = listBaseRespon.getPayload().stream().filter(x -> x.getAkses().equals("3"));
+                        Stream<HomeModel> k = listBaseRespon.getPayload().stream().filter(x -> x.getAkses().equals(Konstanta.AKSES_MERAH));
 
 
                         //jika jumlahnya lebih besar/sama dengan 1
@@ -71,16 +73,17 @@ public class HomeController implements IHomeRequest {
                             mediaPlayer.start();
 
                             //getarkan HP
-                            Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+                            vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                vibrator.vibrate(VibrationEffect.createOneShot(4000, VibrationEffect.DEFAULT_AMPLITUDE));
+                                vibrator.vibrate(VibrationEffect.createOneShot(Konstanta.LAMA_GETAR, VibrationEffect.DEFAULT_AMPLITUDE));
                             } else {
-                                vibrator.vibrate(4000);
+                                vibrator.vibrate(Konstanta.LAMA_GETAR);
                             }
                         }
 
                         //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
-                        listBaseRespon.getPayload().removeIf(x -> x.getAkses().equals("1"));
+                        listBaseRespon.getPayload().removeIf(x -> x.getAkses().equals(Konstanta.AKSES_HIJAU));
 
                         //urutkan supaya yang aksesnya 3 berada di list paling atas
                         Collections.sort(listBaseRespon.getPayload(),HomeModel.modelComparator);
@@ -100,5 +103,6 @@ public class HomeController implements IHomeRequest {
     @Override
     public void stopAlarm() {
         mediaPlayer.stop();
+        vibrator.cancel();
     }
 }

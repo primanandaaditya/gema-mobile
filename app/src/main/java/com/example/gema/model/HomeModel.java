@@ -8,7 +8,52 @@ public class HomeModel {
     String Nama;
     String Registrasi_WBP;
     String Akses;
+    String Kode_Lokasi;
     String Gambar;
+    String Tgl_Aktivitas;
+    String Tgl_Pasang;
+    String Baterai;
+    String RSSI;
+
+    public String getTgl_Aktivitas() {
+        return Tgl_Aktivitas;
+    }
+
+    public void setTgl_Aktivitas(String tgl_Aktivitas) {
+        Tgl_Aktivitas = tgl_Aktivitas;
+    }
+
+    public String getTgl_Pasang() {
+        return Tgl_Pasang;
+    }
+
+    public void setTgl_Pasang(String tgl_Pasang) {
+        Tgl_Pasang = tgl_Pasang;
+    }
+
+    public String getBaterai() {
+        return Baterai;
+    }
+
+    public void setBaterai(String baterai) {
+        Baterai = baterai;
+    }
+
+    public String getRSSI() {
+        return RSSI;
+    }
+
+    public void setRSSI(String RSSI) {
+        this.RSSI = RSSI;
+    }
+
+    public String getKode_Lokasi() {
+        return Kode_Lokasi;
+    }
+
+    public void setKode_Lokasi(String kode_Lokasi) {
+        Kode_Lokasi = kode_Lokasi;
+    }
 
     public String getDMAC() {
         return DMAC;
