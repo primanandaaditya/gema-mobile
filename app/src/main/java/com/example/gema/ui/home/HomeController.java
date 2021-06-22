@@ -15,6 +15,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.gema.R;
 import com.example.gema.adapter.HomeAdapter;
 import com.example.gema.helper.Endpoint;
+import com.example.gema.helper.InternetChecker;
 import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.HomeModel;
@@ -34,12 +35,16 @@ public class HomeController implements IHomeRequest {
     MediaPlayer mediaPlayer;
     Vibrator vibrator;
 
+
     public HomeController(Context context, IHomeRespon iHomeRespon) {
         this.context = context;
         this.iHomeRespon = iHomeRespon;
 
         //init media player untuk membunyikan alarm
         mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
+
+        //init vibrator
+        vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -73,8 +78,6 @@ public class HomeController implements IHomeRequest {
                             mediaPlayer.start();
 
                             //getarkan HP
-                            vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
-
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 vibrator.vibrate(VibrationEffect.createOneShot(Konstanta.LAMA_GETAR, VibrationEffect.DEFAULT_AMPLITUDE));
                             } else {
@@ -102,7 +105,14 @@ public class HomeController implements IHomeRequest {
 
     @Override
     public void stopAlarm() {
-        mediaPlayer.stop();
-        vibrator.cancel();
+
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+        }
+
+        if (vibrator != null){
+            vibrator.cancel();
+        }
+
     }
 }

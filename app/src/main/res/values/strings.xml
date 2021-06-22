@@ -8,4 +8,5 @@
     <string name="registrasi_wbp">Registrasi WBP</string>
     <string name="WBP">WBP</string>
     <string name="lokasi">Lokasi</string>
+    <string name="tidak_ada_koneksi_internet">Tidak ada koneksi internet</string>
 </resources>
