@@ -93,9 +93,10 @@ public class MainActivity extends AppCompatActivity {
     //fungsi ini untuk memulai notifikasi
     public void startAlarmNotif() {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 2000;
+        int interval = 500;
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+
 
     }
 
