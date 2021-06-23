@@ -1,16 +1,17 @@
 package com.example.gema.activities;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.example.gema.R;
+import com.example.gema.helper.AlarmReceiver;
 import com.example.gema.helper.InternetChecker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
@@ -18,11 +19,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     };
 
     InternetChecker internetChecker;
+
+    AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
 
     @Override
@@ -66,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        /* Retrieve a PendingIntent that will perform a broadcast */
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+
+        //aktifkan fitur notifikasi
+        //ini khusus untuk Android 8+
+        startAlarmNotif();
 
     }
 
@@ -83,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //fungsi ini untuk memulai notifikasi
+    public void startAlarmNotif() {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        int interval = 2000;
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+
+    }
 
 
 }
