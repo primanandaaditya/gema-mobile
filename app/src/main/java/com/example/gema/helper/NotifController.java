@@ -1,4 +1,4 @@
-package com.example.gema.ui.home;
+package com.example.gema.helper;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -6,19 +6,16 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.gema.R;
-import com.example.gema.adapter.HomeAdapter;
-import com.example.gema.helper.Endpoint;
-import com.example.gema.helper.InternetChecker;
-import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.HomeModel;
+import com.example.gema.ui.home.IHomeRequest;
+import com.example.gema.ui.home.IHomeRespon;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,23 +25,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class HomeController implements IHomeRequest {
+public class NotifController implements IHomeRequest {
 
     Context context;
     IHomeRespon iHomeRespon;
-    MediaPlayer mediaPlayer;
-    Vibrator vibrator;
+//    MediaPlayer mediaPlayer;
+//    Vibrator vibrator;
 
 
-    public HomeController(Context context, IHomeRespon iHomeRespon) {
+    public NotifController(Context context, IHomeRespon iHomeRespon) {
         this.context = context;
         this.iHomeRespon = iHomeRespon;
 
         //init media player untuk membunyikan alarm
-        mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
+//        mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
 
         //init vibrator
-        vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+//        vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
     }
 
 
@@ -59,7 +56,7 @@ public class HomeController implements IHomeRequest {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("respon json Home", response.toString());
+                        Log.d("respon dari notifcontroller", response.toString());
 
 
                         Gson gson = new Gson();
@@ -77,14 +74,14 @@ public class HomeController implements IHomeRequest {
                         if (k.count() >= 1){
 
                             //mainkan sound alarm
-                            mediaPlayer.start();
+//                            mediaPlayer.start();
 
                             //getarkan HP
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                vibrator.vibrate(VibrationEffect.createOneShot(Konstanta.LAMA_GETAR, VibrationEffect.DEFAULT_AMPLITUDE));
-                            } else {
-                                vibrator.vibrate(Konstanta.LAMA_GETAR);
-                            }
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                                vibrator.vibrate(VibrationEffect.createOneShot(Konstanta.LAMA_GETAR, VibrationEffect.DEFAULT_AMPLITUDE));
+//                            } else {
+//                                vibrator.vibrate(Konstanta.LAMA_GETAR);
+//                            }
                         }
 
                         //hilangkan jika aksesnya =1, karena hijau tidak ditempilkan
@@ -108,13 +105,13 @@ public class HomeController implements IHomeRequest {
     @Override
     public void stopAlarm() {
 
-        if (mediaPlayer != null){
-            mediaPlayer.reset();
-        }
-
-        if (vibrator != null){
-            vibrator.cancel();
-        }
+//        if (mediaPlayer != null){
+//            mediaPlayer.stop();
+//        }
+//
+//        if (vibrator != null){
+//            vibrator.cancel();
+//        }
 
     }
 

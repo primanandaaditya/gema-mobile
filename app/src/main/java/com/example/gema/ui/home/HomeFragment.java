@@ -27,6 +27,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.gema.R;
 import com.example.gema.adapter.HomeAdapter;
+import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.HomeModel;
 import com.google.gson.Gson;
@@ -112,7 +113,7 @@ public class HomeFragment extends Fragment implements IHomeRespon {
                 homeController.get();
 
             }
-        }, 2500);
+        }, Konstanta.JEDA_ALARM_HOME);
 
 
     }

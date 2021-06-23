@@ -8,4 +8,5 @@ public class Konstanta {
 
     public static final int RANDOM_NOTIF_ID = 1010101;
     public static final String CHANNEL_ID = "my_channel";
+    public static final int JEDA_ALARM_HOME = 2500;
 }
