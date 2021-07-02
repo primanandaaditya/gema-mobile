@@ -122,7 +122,21 @@ public class HomeFragment extends Fragment implements IHomeRespon {
 
         //jika error tampilkan toast dan matikan alarm
         Log.d("Error", error.getMessage());
-        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
         homeController.stopAlarm();
+
+        //jika gagal, hit endpoint lagi sesudah 10 detik
+        //jadi proses ini dilakukan berulang-ulang hanya dari kode dibawah
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+                //tunggu 10 detik
+                //baru hit endpoint lagi
+                homeController.get();
+
+            }
+        }, 10000);
+
     }
 }
