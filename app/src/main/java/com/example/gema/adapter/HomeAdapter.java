@@ -28,7 +28,11 @@ public class HomeAdapter  extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return homeModels.size();
+        if (homeModels == null){
+            return 0;
+        }else{
+            return homeModels.size();
+        }
     }
 
     @Override
@@ -83,5 +87,13 @@ public class HomeAdapter  extends BaseAdapter {
 
     void fontHitam(TextView textView){
         textView.setTextColor(context.getResources().getColor(R.color.black));
+    }
+
+    public List<HomeModel> getHomeModels() {
+        return homeModels;
+    }
+
+    public void setHomeModels(List<HomeModel> homeModels) {
+        this.homeModels = homeModels;
     }
 }

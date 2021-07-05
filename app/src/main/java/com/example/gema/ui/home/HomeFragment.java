@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment implements IHomeRespon {
     ListView listView;
     MediaPlayer mediaPlayer;
     HomeController homeController;
+    HomeAdapter homeAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +65,10 @@ public class HomeFragment extends Fragment implements IHomeRespon {
 
         //init listview
         listView=(ListView)getActivity().findViewById(R.id.lv);
+
+        //init listview+ adapter
+        homeAdapter=new HomeAdapter(getActivity(), null);
+        listView.setAdapter(homeAdapter);
 
         //mulai akses endpoint
         homeController=new HomeController(getActivity(), this);
@@ -90,16 +95,18 @@ public class HomeFragment extends Fragment implements IHomeRespon {
         //stop alarm kalau screen tdk fokus
         homeController.stopAlarm();
 
-    }
 
+    }
 
 
     @Override
     public void onSukses(BaseRespon<List<HomeModel>> respon) {
 
         //isi listview
-        HomeAdapter homeAdapter=new HomeAdapter(getActivity(), respon.getPayload());
-        listView.setAdapter(homeAdapter);
+//        homeAdapter=new HomeAdapter(getActivity(), respon.getPayload());
+
+        homeAdapter.setHomeModels(respon.getPayload());
+        homeAdapter.notifyDataSetChanged();
 
         //jika sukses, hit endpoint lagi sesudah 2,5 detik
         //jadi proses ini dilakukan berulang-ulang hanya dari kode dibawah
@@ -125,18 +132,18 @@ public class HomeFragment extends Fragment implements IHomeRespon {
 //        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
         homeController.stopAlarm();
 
-        //jika gagal, hit endpoint lagi sesudah 10 detik
+        //jika gagal, hit endpoint lagi sesudah 3 detik
         //jadi proses ini dilakukan berulang-ulang hanya dari kode dibawah
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
 
-                //tunggu 10 detik
+                //tunggu 3 detik
                 //baru hit endpoint lagi
                 homeController.get();
 
             }
-        }, 10000);
+        }, 3000);
 
     }
 }
