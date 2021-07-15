@@ -26,15 +26,7 @@ import javax.net.ssl.SSLEngine;
 
 public class MainActivity extends AppCompatActivity {
 
-    int PERMISSION_ALL = 1;
 
-    String[] PERMISSIONS = {
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_NETWORK_STATE
-    };
 
     InternetChecker internetChecker;
 
@@ -59,30 +51,5 @@ public class MainActivity extends AppCompatActivity {
         if (!internetChecker.haveNetwork(MainActivity.this)){
             Toast.makeText(MainActivity.this, getResources().getString(R.string.tidak_ada_koneksi_internet), Toast.LENGTH_SHORT).show();
         }
-
-        //tampilkan dialog permission
-        if(!hasPermissions(this, PERMISSIONS)){
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
-
-
-
     }
-
-
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-
-
-
 }

@@ -65,10 +65,8 @@ public class HomeController implements IHomeRequest {
                         //tangkap respon JSON dalam class BaseRespon
                         BaseRespon<List<HomeModel>> listBaseRespon= gson.fromJson(response.toString(), new TypeToken<BaseRespon<List<HomeModel>>>(){}.getType());
 
-
                         //cari yang nilai aksesnya =3
                         Stream<HomeModel> k = listBaseRespon.getPayload().stream().filter(x -> x.getAkses().equals(Konstanta.AKSES_MERAH));
-
 
                         //jika jumlahnya lebih besar/sama dengan 1
                         //nyalakan alarm

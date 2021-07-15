@@ -74,8 +74,6 @@ public class HomeFragment extends Fragment implements IHomeRespon {
         homeController=new HomeController(getActivity(), this);
         homeController.get();
 
-
-
     }
 
 
@@ -94,8 +92,6 @@ public class HomeFragment extends Fragment implements IHomeRespon {
 
         //stop alarm kalau screen tdk fokus
         homeController.stopAlarm();
-
-
     }
 
 
@@ -143,7 +139,7 @@ public class HomeFragment extends Fragment implements IHomeRespon {
                 homeController.get();
 
             }
-        }, 3000);
+        }, 5000);
 
     }
 }
