@@ -8,4 +8,6 @@ public class Endpoint {
     public static final String BASE_URL             = "http://192.168.1.8:8036/api/";
     public static final String DATA_WBP             = "gelangwbp/get";
     public static final String GET_LOKASI           = "lokasi/getlokasi";
+    public static final String JUMLAH_DILOKASI      = "lokasi/jumlahdilokasi/";
+
 }

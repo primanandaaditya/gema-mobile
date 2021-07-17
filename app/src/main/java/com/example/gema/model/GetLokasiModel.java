@@ -4,6 +4,7 @@ public class GetLokasiModel {
     String kode_Lokasi;
     String nama_Lokasi;
     String jumlah;
+    String warna;
 
     public String getKode_Lokasi() {
         return kode_Lokasi;
@@ -27,5 +28,13 @@ public class GetLokasiModel {
 
     public void setJumlah(String jumlah) {
         this.jumlah = jumlah;
+    }
+
+    public String getWarna() {
+        return warna;
+    }
+
+    public void setWarna(String warna) {
+        this.warna = warna;
     }
 }

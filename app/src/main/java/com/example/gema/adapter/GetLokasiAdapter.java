@@ -1,6 +1,7 @@
 package com.example.gema.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.gema.R;
+import com.example.gema.activities.JumlahDilokasiActivity;
+import com.example.gema.helper.Konstanta;
 import com.example.gema.model.GetLokasiModel;
 import com.example.gema.model.HomeModel;
 
@@ -21,6 +24,7 @@ public class GetLokasiAdapter extends BaseAdapter {
     List<GetLokasiModel> getLokasiModels;
     LayoutInflater inflater;
     GetLokasiModel getLokasiModel;
+    String kode_lokasi,jumlah_orang;
 
     public GetLokasiAdapter(Context context, List<GetLokasiModel> getLokasiModels) {
         this.context = context;
@@ -56,13 +60,23 @@ public class GetLokasiAdapter extends BaseAdapter {
         TextView tv_kodelokasi = (TextView) convertView.findViewById(R.id.tv_kodelokasi);
         TextView tv_namalokasi = (TextView) convertView.findViewById(R.id.tv_namalokasi);
         TextView tv_jumlah = (TextView) convertView.findViewById(R.id.tv_jumlah);
-        LinearLayout ll = (LinearLayout)convertView.findViewById(R.id.ll);
+        LinearLayout ll = (LinearLayout)convertView.findViewById(R.id.ll_getlokasi);
 
         getLokasiModel = getLokasiModels.get(position);
 
         tv_kodelokasi.setText( "Kode lokasi: " + getLokasiModel.getKode_Lokasi());
         tv_namalokasi.setText("Nama lokasi: " + getLokasiModel.getNama_Lokasi());
         tv_jumlah.setText(getLokasiModel.getJumlah());
+
+        if (!getLokasiModel.getWarna().equals("")){
+            ll.setBackgroundColor(context.getResources().getColor(R.color.merah));
+        }else{
+            fontHitam(tv_jumlah);
+            fontHitam(tv_kodelokasi);
+            fontHitam(tv_namalokasi);
+        }
+
+
         return convertView;
     }
 

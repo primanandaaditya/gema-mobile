@@ -1,12 +1,14 @@
 package com.example.gema.ui.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,8 +24,10 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.gema.R;
+import com.example.gema.activities.JumlahDilokasiActivity;
 import com.example.gema.adapter.GetLokasiAdapter;
 import com.example.gema.helper.Endpoint;
+import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.GetLokasiModel;
 
@@ -59,6 +63,22 @@ public class DashboardFragment extends Fragment implements IGetLokasiRespon {
         getLokasiAdapter.setGetLokasiModels(models.getPayload());
         lv.setAdapter(getLokasiAdapter);
         getLokasiAdapter.notifyDataSetChanged();
+
+        //kalau listview diklik
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GetLokasiModel getLokasiModel=(GetLokasiModel)parent.getAdapter().getItem(position);
+
+                String kode_lokasi = getLokasiModel.getKode_Lokasi();
+                String jumlah_orang = getLokasiModel.getJumlah();
+
+                Intent intent = new Intent(getContext(), JumlahDilokasiActivity.class);
+                intent.putExtra(Konstanta.KODE_LOKASI, kode_lokasi);
+                intent.putExtra(Konstanta.JUMLAH_ORANG, jumlah_orang);
+                startActivity(intent);
+            }
+        });
 
         //jika sukses, hit endpoint lagi sesudah 2,5 detik
         //jadi proses ini dilakukan berulang-ulang hanya dari kode dibawah
