@@ -8,4 +8,6 @@ public class Konstanta {
 
     public static final String KODE_LOKASI = "kode_lokasi";
     public static final String JUMLAH_ORANG = "jumlah_orang";
+
+    public static final String NOW_LOADING = "Now loading...";
 }

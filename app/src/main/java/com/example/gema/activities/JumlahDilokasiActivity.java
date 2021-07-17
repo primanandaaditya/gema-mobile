@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
 import com.example.gema.R;
+import com.example.gema.adapter.JumlahDilokasiAdapter;
 import com.example.gema.helper.Konstanta;
 import com.example.gema.model.BaseRespon;
 import com.example.gema.model.JumlahDilokasiModel;
@@ -23,6 +25,7 @@ public class JumlahDilokasiActivity extends AppCompatActivity implements IJumlah
     TextView tv;
     String kode_lokasi, jumlah_orang;
     JumlahDilokasiController jumlahDilokasiController;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class JumlahDilokasiActivity extends AppCompatActivity implements IJumlah
         setContentView(R.layout.activity_jumlah_dilokasi);
 
         tv=(TextView)findViewById(R.id.tv);
+        lv=(ListView)findViewById(R.id.lv);
+
         Intent intent = getIntent();
         kode_lokasi = intent.getStringExtra(Konstanta.KODE_LOKASI);
         jumlah_orang = intent.getStringExtra(Konstanta.JUMLAH_ORANG);
@@ -41,8 +46,10 @@ public class JumlahDilokasiActivity extends AppCompatActivity implements IJumlah
 
     @Override
     public void onJumlahSukses(BaseRespon<List<JumlahDilokasiModel>> respon) {
-        Toast.makeText(JumlahDilokasiActivity.this, String.valueOf(respon.getPayload().size()), Toast.LENGTH_SHORT).show();
-        tv.setText(tv.getText() + respon.toString());
+        JumlahDilokasiAdapter adapter = new JumlahDilokasiAdapter(JumlahDilokasiActivity.this, respon.getPayload());
+        lv.setAdapter(adapter);
+//        Toast.makeText(JumlahDilokasiActivity.this, String.valueOf(respon.getPayload().size()), Toast.LENGTH_SHORT).show();
+//        tv.setText(tv.getText() + respon.toString());
     }
 
     @Override
